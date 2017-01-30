@@ -3,7 +3,7 @@ return [
     'db' => [
         'adapters' => [
             'DB\MySql' => [
-                'database' => 'teste',
+                'database' => 'service',
                 'driver' => \Mysqli::class,
                 'username' => 'root',
                 'port' => '3306',

@@ -75,20 +75,22 @@ class MusicaResource extends AbstractResourceListener {
                         )
                 )
                 ->current();
-        $links = new \ZF\Hal\Link\LinkCollection();
+		if($result){
+			$links = new \ZF\Hal\Link\LinkCollection();
 
-        $link = new \ZF\Hal\Link\Link('genero');
-        $params = ['genero_id' => $result->getId_genre()];
-        $link->setRoute('music.rest.genero', $params);
-        $links->add($link);
+			$link = new \ZF\Hal\Link\Link('genero');
+			$params = ['genero_id' => $result->getId_genre()];
+			$link->setRoute('music.rest.genero', $params);
+			$links->add($link);
 
 
-        $link = new \ZF\Hal\Link\Link('artista');
-        $params = ['artista_id' => $result->getId_artist()];
-        $link->setRoute('music.rest.artista', $params);
-        $links->add($link);
+			$link = new \ZF\Hal\Link\Link('artista');
+			$params = ['artista_id' => $result->getId_artist()];
+			$link->setRoute('music.rest.artista', $params);
+			$links->add($link);
 
-        $result->setLinks($links);
+			$result->setLinks($links);
+		}
         return $result;
     }
 
@@ -124,7 +126,7 @@ class MusicaResource extends AbstractResourceListener {
             $where->like("genre.name", '%' . $params['genero'] . '%');
             $select->where($where);
         }
-//print $select->getSqlString();die;
+		
         $dbTableGatewayAdapter = new DbSelect($select, $sql);
         return new MusicaCollection($dbTableGatewayAdapter);
     }
