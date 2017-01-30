@@ -44,6 +44,33 @@ return [
                     ],
                 ],
             ],
+            'music.rest.genero' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/genero[/:genero_id][:query]',
+                    'defaults' => [
+                        'controller' => 'Music\\V1\\Rest\\Genero\\Controller',
+                    ],
+                ],
+            ],
+            'music.rest.musica' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/musica[/:musica_id][:query]',
+                    'defaults' => [
+                        'controller' => 'Music\\V1\\Rest\\Musica\\Controller',
+                    ],
+                ],
+            ],
+            'music.rest.artista' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/artista[/:artista_id][:query]',
+                    'defaults' => [
+                        'controller' => 'Music\\V1\\Rest\\Artista\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'zf-versioning' => [
@@ -52,6 +79,9 @@ return [
             1 => 'music.rest.genre',
             2 => 'music.rest.artist',
             3 => 'music.rest.song',
+            4 => 'music.rest.genero',
+            5 => 'music.rest.musica',
+            6 => 'music.rest.artista',
         ],
     ],
     'zf-rpc' => [
@@ -69,6 +99,9 @@ return [
             'Music\\V1\\Rest\\Genre\\Controller' => 'HalJson',
             'Music\\V1\\Rest\\Artist\\Controller' => 'HalJson',
             'Music\\V1\\Rest\\Song\\Controller' => 'HalJson',
+            'Music\\V1\\Rest\\Genero\\Controller' => 'HalJson',
+            'Music\\V1\\Rest\\Musica\\Controller' => 'HalJson',
+            'Music\\V1\\Rest\\Artista\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'Music\\V1\\Rpc\\Status\\Controller' => [
@@ -91,6 +124,21 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'Music\\V1\\Rest\\Genero\\Controller' => [
+                0 => 'application/vnd.music.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'Music\\V1\\Rest\\Musica\\Controller' => [
+                0 => 'application/vnd.music.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'Music\\V1\\Rest\\Artista\\Controller' => [
+                0 => 'application/vnd.music.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'Music\\V1\\Rpc\\Status\\Controller' => [
@@ -109,6 +157,18 @@ return [
                 0 => 'application/vnd.music.v1+json',
                 1 => 'application/json',
             ],
+            'Music\\V1\\Rest\\Genero\\Controller' => [
+                0 => 'application/vnd.music.v1+json',
+                1 => 'application/json',
+            ],
+            'Music\\V1\\Rest\\Musica\\Controller' => [
+                0 => 'application/vnd.music.v1+json',
+                1 => 'application/json',
+            ],
+            'Music\\V1\\Rest\\Artista\\Controller' => [
+                0 => 'application/vnd.music.v1+json',
+                1 => 'application/json',
+            ],
         ],
     ],
     'zf-content-validation' => [
@@ -123,6 +183,9 @@ return [
         ],
         'Music\\V1\\Rest\\Song\\Controller' => [
             'input_filter' => 'Music\\V1\\Rest\\Song\\Validator',
+        ],
+        'Music\\V1\\Rest\\Genero\\Controller' => [
+            'input_filter' => 'Music\\V1\\Rest\\Genero\\Validator',
         ],
     ],
     'input_filter_specs' => [
@@ -197,7 +260,7 @@ return [
                     0 => [
                         'name' => 'ZF\\ContentValidation\\Validator\\DbRecordExists',
                         'options' => [
-                            'adapter' => 'mysql',
+                            'adapter' => 'DB\\MySql',
                             'table' => 'artist',
                             'field' => 'id',
                         ],
@@ -219,7 +282,7 @@ return [
                     0 => [
                         'name' => 'ZF\\ContentValidation\\Validator\\DbRecordExists',
                         'options' => [
-                            'adapter' => 'mysql',
+                            'adapter' => 'DB\\MySql',
                             'table' => 'genre',
                             'field' => 'id',
                         ],
@@ -265,6 +328,22 @@ return [
                 'required' => true,
                 'filters' => [],
                 'validators' => [],
+            ],
+        ],
+        'Music\\V1\\Rest\\Genero\\Validator' => [
+            0 => [
+                'required' => false,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'id',
+                'description' => 'Identificador da entidade',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'name',
+                'description' => 'Nome/Descrição do registro',
             ],
         ],
     ],
@@ -335,6 +414,76 @@ return [
             'collection_class' => \Music\V1\Rest\Song\SongCollection::class,
             'service_name' => 'song',
         ],
+        'Music\\V1\\Rest\\Genero\\Controller' => [
+            'listener' => \Music\V1\Rest\Genero\GeneroResource::class,
+            'route_name' => 'music.rest.genero',
+            'route_identifier_name' => 'genero_id',
+            'collection_name' => 'genero',
+            'entity_http_methods' => [
+                0 => 'GET',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+            ],
+            'collection_query_whitelist' => [
+                0 => 'name',
+                1 => 'sort',
+            ],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \Music\V1\Rest\Genero\GeneroEntity::class,
+            'collection_class' => \Music\V1\Rest\Genero\GeneroCollection::class,
+            'service_name' => 'Genero',
+        ],
+        'Music\\V1\\Rest\\Musica\\Controller' => [
+            'listener' => \Music\V1\Rest\Musica\MusicaResource::class,
+            'route_name' => 'music.rest.musica',
+            'route_identifier_name' => 'musica_id',
+            'collection_name' => 'musica',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [
+                0 => 'genero',
+                1 => 'artista',
+            ],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \Music\V1\Rest\Musica\MusicaEntity::class,
+            'collection_class' => \Music\V1\Rest\Musica\MusicaCollection::class,
+            'service_name' => 'Musica',
+        ],
+        'Music\\V1\\Rest\\Artista\\Controller' => [
+            'listener' => \Music\V1\Rest\Artista\ArtistaResource::class,
+            'route_name' => 'music.rest.artista',
+            'route_identifier_name' => 'artista_id',
+            'collection_name' => 'artista',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [
+                0 => 'name',
+            ],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \Music\V1\Rest\Artista\ArtistaEntity::class,
+            'collection_class' => \Music\V1\Rest\Artista\ArtistaCollection::class,
+            'service_name' => 'Artista',
+        ],
     ],
     'zf-hal' => [
         'metadata_map' => [
@@ -374,31 +523,74 @@ return [
                 'route_identifier_name' => 'song_id',
                 'is_collection' => true,
             ],
+            \Music\V1\Rest\Genero\GeneroEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'music.rest.genero',
+                'route_identifier_name' => 'genero_id',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+            ],
+            \Music\V1\Rest\Genero\GeneroCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'music.rest.genero',
+                'route_identifier_name' => 'genero_id',
+                'is_collection' => true,
+            ],
+            \Music\V1\Rest\Musica\MusicaEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'music.rest.musica',
+                'route_identifier_name' => 'musica_id',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+            ],
+            \Music\V1\Rest\Musica\MusicaCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'music.rest.musica',
+                'route_identifier_name' => 'musica_id',
+                'is_collection' => true,
+            ],
+            \Music\V1\Rest\Artista\ArtistaEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'music.rest.artista',
+                'route_identifier_name' => 'artista_id',
+                'hydrator' => \Zend\Hydrator\ArraySerializable::class,
+            ],
+            \Music\V1\Rest\Artista\ArtistaCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'music.rest.artista',
+                'route_identifier_name' => 'artista_id',
+                'is_collection' => true,
+            ],
         ],
     ],
     'zf-apigility' => [
         'db-connected' => [
             'Music\\V1\\Rest\\Genre\\GenreResource' => [
-                'adapter_name' => 'mysql',
+                'adapter_name' => 'DB\\MySql',
                 'table_name' => 'genre',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'Music\\V1\\Rest\\Genre\\Controller',
                 'entity_identifier_name' => 'id',
             ],
             'Music\\V1\\Rest\\Artist\\ArtistResource' => [
-                'adapter_name' => 'mysql',
+                'adapter_name' => 'DB\\MySql',
                 'table_name' => 'artist',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'Music\\V1\\Rest\\Artist\\Controller',
                 'entity_identifier_name' => 'id',
             ],
             'Music\\V1\\Rest\\Song\\SongResource' => [
-                'adapter_name' => 'mysql',
+                'adapter_name' => 'DB\\MySql',
                 'table_name' => 'song',
                 'hydrator_name' => \Zend\Hydrator\ArraySerializable::class,
                 'controller_service_name' => 'Music\\V1\\Rest\\Song\\Controller',
                 'entity_identifier_name' => 'id',
             ],
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            \Music\V1\Rest\Genero\GeneroResource::class => \Music\V1\Rest\Genero\GeneroResourceFactory::class,
+            \Music\V1\Rest\Musica\MusicaResource::class => \Music\V1\Rest\Musica\MusicaResourceFactory::class,
+            \Music\V1\Rest\Artista\ArtistaResource::class => \Music\V1\Rest\Artista\ArtistaResourceFactory::class,
         ],
     ],
 ];
