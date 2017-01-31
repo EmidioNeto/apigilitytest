@@ -387,6 +387,7 @@ return [
             'collection_query_whitelist' => [
                 0 => 'genero',
                 1 => 'artista',
+                2 => 'name',
             ],
             'page_size' => 25,
             'page_size_param' => null,

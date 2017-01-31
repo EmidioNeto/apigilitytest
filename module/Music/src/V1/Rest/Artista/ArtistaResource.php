@@ -99,12 +99,12 @@ class ArtistaResource extends AbstractResourceListener {
         }
         $sort = null;
 
-        if (in_array($params['sort'], array_keys((new GeneroEntity())->getArrayCopy()))) {
+        if (in_array($params['sort'], array_keys((new ArtistaEntity())->getArrayCopy()))) {
             $sort = $params['sort'];
         }
         $dbTableGatewayAdapter = new DbTableGateway($this->tableGateway, $where, $sort);
 
-        return new GeneroCollection($dbTableGatewayAdapter);
+        return new ArtistaCollection($dbTableGatewayAdapter);
     }
 
     /**
