@@ -102,3 +102,8 @@ CREATE TABLE `song` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-01-29 17:52:30
+
+
+--insert into service.genre(name) SELECT genre FROM service.music_dataset group by genre;
+--insert into service.artist(name) SELECT artist FROM service.music_dataset group by artist;
+--insert into service.song(id_artist,id_genre,name,year,lyrics) SELECT a.id id_artist,g.id id_genre,md.song,year,lyrics FROM service.music_dataset md join service.artist a on md.artist = a.name join service.genre g on md.genre = g.name;
