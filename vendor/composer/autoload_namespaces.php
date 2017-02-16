@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'ZfrCors\\' => array($vendorDir . '/zfr/zfr-cors/src'),
     'OAuth2' => array($vendorDir . '/bshaffer/oauth2-server-php/src'),
     'Michelf' => array($vendorDir . '/michelf/php-markdown'),
     'KevinGH\\Version' => array($vendorDir . '/kherge/version/src/lib'),

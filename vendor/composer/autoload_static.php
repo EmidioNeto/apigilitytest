@@ -300,6 +300,13 @@ class ComposerStaticInitf5c58a761fa085c1a6a9b13948f34b85
     );
 
     public static $prefixesPsr0 = array (
+        'Z' => 
+        array (
+            'ZfrCors\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/zfr/zfr-cors/src',
+            ),
+        ),
         'O' => 
         array (
             'OAuth2' => 
