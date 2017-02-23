@@ -389,7 +389,7 @@ return [
                 1 => 'artista',
                 2 => 'name',
             ],
-            'page_size' => '5000',
+            'page_size' => '1000',
             'page_size_param' => null,
             'entity_class' => \Music\V1\Rest\Musica\MusicaEntity::class,
             'collection_class' => \Music\V1\Rest\Musica\MusicaCollection::class,
@@ -409,7 +409,7 @@ return [
             'collection_query_whitelist' => [
                 0 => 'name',
             ],
-            'page_size' => '5000',
+            'page_size' => '1000',
             'page_size_param' => null,
             'entity_class' => \Music\V1\Rest\Artista\ArtistaEntity::class,
             'collection_class' => \Music\V1\Rest\Artista\ArtistaCollection::class,
